@@ -15,7 +15,13 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            playerMovement.Swap();
+            //playerMovement.Swap();
+            playerMovement.LerpToMiddle();
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            playerMovement.LerpToTarget();
         }
     }
 }

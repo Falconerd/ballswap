@@ -17,8 +17,14 @@ public class LerpTo : MonoBehaviour
 
     private bool journeyStarted;
 
+    private bool isPaused;
+
     private void Update()
     {
+        if (isPaused)
+        {
+            startTime += Time.deltaTime;
+        }
         if (journeyStarted)
         {
             var distanceCovered = (Time.time - startTime) * speed;
@@ -46,5 +52,15 @@ public class LerpTo : MonoBehaviour
     internal void Lerp(Vector3 start, Vector3 end)
     {
         Lerp(start, end, lerpSpeed);
+    }
+
+    internal void Pause()
+    {
+        isPaused = true;
+    }
+
+    internal void Unpause()
+    {
+        isPaused = false;
     }
 }

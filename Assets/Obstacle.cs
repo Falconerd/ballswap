@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    public enum ObstacleColor { Cyan, Pink }
+    public enum ObstacleColor { Cyan, Pink, White, Orange }
 
     [SerializeField]
     private ObstacleColor color = ObstacleColor.Cyan;
@@ -52,7 +52,7 @@ public class Obstacle : MonoBehaviour
                 (color == ObstacleColor.Pink && collision.gameObject.name == "Pink"))
             {
                 GameManager.instance.PlayerScored();
-            Destroy(gameObject);
+                Destroy(gameObject);
             }
             else
             {

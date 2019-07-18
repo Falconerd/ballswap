@@ -25,6 +25,24 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     GameObject pinkObstaclePrefab;
 
+    [SerializeField]
+    GameObject whiteObstaclePrefab;
+
+    [SerializeField]
+    Vector3[] positions;
+
+    string[] patterns = {
+        "c p", "cwp", "w p", "ppc", "w w", "p c", " p ", " pc", "cp ", " o "
+    };
+
+    string[] level1 =
+    {
+        "c p, 3, 5",
+        "p c, 3, 5",
+        "c p, 3, 5",
+        "c p, 3, 5",
+    };
+    
     bool waiting;
 
     private void Awake()
@@ -84,13 +102,26 @@ public class SpawnManager : MonoBehaviour
 
     void Spawn()
     {
-        if (Random.Range(0f, 1f) > 0.5f)
+        var pattern = patterns[Random.Range(0, patterns.Length)].ToCharArray();
+        Debug.Log(pattern);
+        // Read each letter in order
+        // Spawn a particular obstacle based on letter and position
+        for (var i = 0; i < pattern.Length; i++)
         {
-            SpawnOne();
-        }
-        else
-        {
-            SpawnTwo();
+            switch(pattern[i])
+            {
+                case 'c':
+                    Instantiate(cyanObstaclePrefab, positions[i], Quaternion.identity);
+                    break;
+                case 'p':
+                    Instantiate(pinkObstaclePrefab, positions[i], Quaternion.identity);
+                    break;
+                case 'w':
+                    Instantiate(whiteObstaclePrefab, positions[i], Quaternion.identity);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

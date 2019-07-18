@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3664872414485891627}
   - component: {fileID: 3664872414485892055}
   - component: {fileID: 3664872414485892052}
+  - component: {fileID: 5506543858889385325}
   m_Layer: 0
   m_Name: PinkObstacle
   m_TagString: Untagged
@@ -71,9 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3347907130081704425, guid: 1d0a4f73bd730fe48a8ab77b2ef5a226,
-    type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4214e072558601b4ca7c2891156f480c, type: 3}
+  m_Color: {r: 0.9294118, g: 0, b: 0.54901963, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -115,7 +115,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8888889, y: 0.8888889}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -141,3 +141,22 @@ MonoBehaviour:
     type: 3}
   cyanParticlesPrefab: {fileID: 7797824404052805840, guid: d92ed98638436c94fb9a68097fa54385,
     type: 3}
+--- !u!95 &5506543858889385325
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3664872414485891624}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d60fe6b748652a4abe16470d58b978c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
