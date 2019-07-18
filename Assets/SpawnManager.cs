@@ -31,19 +31,36 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     Vector3[] positions;
 
-    string[] patterns = {
-        "c p", "cwp", "w p", "ppc", "w w", "p c", " p ", " pc", "cp ", " o "
-    };
-
-    string[] level1 =
+    internal class Level
     {
-        "c p, 3, 5",
-        "p c, 3, 5",
-        "c p, 3, 5",
-        "c p, 3, 5",
-    };
-    
+        internal Section[] sections;
+        internal Level(Section[] sections)
+        {
+            this.sections = sections;
+        }
+    }
+
+    internal class Section
+    {
+        internal string pattern;
+        internal float delay;
+        internal float speed;
+
+        internal Section(string pattern, float delay, float speed)
+        {
+            this.pattern = pattern;
+            this.delay = delay;
+            this.speed = speed;
+        }
+    }
+
+    int currentLevelIndex = 0;
+    int currentSectionIndex = 0;
+
+    List<Level> levels = new List<Level>();
+
     bool waiting;
+    float waitClock = 0;
 
     private void Awake()
     {
@@ -59,84 +76,93 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        spawnClock = spawnTimers[difficultyIndex].x;
-        difficultyClock = spawnTimers[difficultyIndex].y;
+        Section[] level1Sections = {
+            new Section("c p", 3, 9),
+            new Section("p c", 3, 9),
+            new Section("c p", 3, 9),
+            new Section("p c", 3, 9),
+            new Section("c p", 2, 9),
+            new Section("p c", 2, 9),
+            new Section("c p", 1, 9),
+            new Section("p c", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("p c", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("p c", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("p c", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("c p", 1, 9),
+        };
+        levels.Add(new Level(level1Sections));
     }
 
     private void Update()
     {
-        if (waiting) return;
-
-        spawnClock -= Time.deltaTime;
-        difficultyClock -= Time.deltaTime;
-
-        if (spawnClock <= 0)
+        if (waitClock > 0)
+        {
+            waitClock -= Time.deltaTime;
+        }
+        else
         {
             Spawn();
-            spawnClock = spawnTimers[difficultyIndex].x;
         }
-
-        if (difficultyClock <= 0 && difficultyIndex < spawnTimers.Length - 1)
-        {
-            waiting = true;
-            StartCoroutine(IncreaseDifficulty());
-        }
-    }
-
-    IEnumerator IncreaseDifficulty()
-    {
-        yield return new WaitForSeconds(difficultyWaitTime);
-        difficultyIndex++;
-        waiting = false;
-        spawnClock = 0;
-        difficultyClock = spawnTimers[difficultyIndex].y;
-    }
-
-    void SpawnObstacle(bool cyan, bool top)
-    {
-        xOffset = GameManager.instance.cyanTarget.x;
-        var prefab = cyan ? cyanObstaclePrefab : pinkObstaclePrefab;
-        var offset = top ? xOffset : -xOffset;
-        var obstacle = Instantiate(prefab, transform.position + Vector3.right * offset, Quaternion.identity);
     }
 
     void Spawn()
     {
-        var pattern = patterns[Random.Range(0, patterns.Length)].ToCharArray();
-        Debug.Log(pattern);
+        Debug.Log(levels);
+
+        var section = levels[currentLevelIndex].sections[currentSectionIndex];
+        var pattern = section.pattern;
+        var delay = section.delay;
+        var speed = section.speed;
+        var patternChars = pattern.ToCharArray();
+
+        IncrementSection();
+
+        waitClock = delay;
+        
+        Debug.Log(pattern + ", " + delay + ", " + speed);
+
         // Read each letter in order
         // Spawn a particular obstacle based on letter and position
-        for (var i = 0; i < pattern.Length; i++)
+        for (var i = 0; i < patternChars.Length; i++)
         {
-            switch(pattern[i])
+            switch(patternChars[i])
             {
                 case 'c':
-                    Instantiate(cyanObstaclePrefab, positions[i], Quaternion.identity);
+                    SpawnPrefab(cyanObstaclePrefab, positions[i], speed);
                     break;
                 case 'p':
-                    Instantiate(pinkObstaclePrefab, positions[i], Quaternion.identity);
+                    SpawnPrefab(pinkObstaclePrefab, positions[i], speed);
                     break;
                 case 'w':
-                    Instantiate(whiteObstaclePrefab, positions[i], Quaternion.identity);
+                    SpawnPrefab(whiteObstaclePrefab, positions[i], speed);
                     break;
                 default:
                     break;
             }
+
         }
     }
 
-    void SpawnOne()
+    void SpawnPrefab(GameObject prefab, Vector3 position, float speed)
     {
-        var color = Random.Range(0f, 1f) > 0.5f;
-        var top = Random.Range(0f, 1f) > 0.5f;
-        SpawnObstacle(color, top);
+            var go = Instantiate(prefab, position, Quaternion.identity);
+            go.GetComponent<MoveObject>().SetSpeed(speed);
     }
 
-    void SpawnTwo()
+    void IncrementSection()
     {
-        var color = Random.Range(0f, 1f) > 0.5f;
-        var top = Random.Range(0f, 1f) > 0.5f;
-        SpawnObstacle(color, top);
-        SpawnObstacle(!color, !top);
+        if (currentSectionIndex == levels[currentLevelIndex].sections.Length)
+        {
+            currentSectionIndex = 0;
+            currentLevelIndex++;
+        }
+        else
+        {
+            currentSectionIndex++;
+        }
     }
 }

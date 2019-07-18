@@ -22,6 +22,11 @@ public class MoveObject : MonoBehaviour
         direction = GetDirection(axis);
     }
 
+    internal void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
     Vector3 GetDirection(LocalDirections axis)
     {
         switch (axis)
