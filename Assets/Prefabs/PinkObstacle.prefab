@@ -137,9 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
-  pinkParticlesPrefab: {fileID: 7568558021506010378, guid: 6476de143bf612349af9e9a45118ee5f,
-    type: 3}
-  cyanParticlesPrefab: {fileID: 7797824404052805840, guid: d92ed98638436c94fb9a68097fa54385,
+  particlesPrefab: {fileID: 7568558021506010378, guid: 6476de143bf612349af9e9a45118ee5f,
     type: 3}
 --- !u!95 &5506543858889385325
 Animator:

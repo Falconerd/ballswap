@@ -29,6 +29,9 @@ public class SpawnManager : MonoBehaviour
     GameObject whiteObstaclePrefab;
 
     [SerializeField]
+    GameObject orangeObstaclePrefab;
+
+    [SerializeField]
     Vector3[] positions;
 
     internal class Level
@@ -77,14 +80,14 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         Section[] level1Sections = {
-            new Section("c p", 3, 9),
-            new Section("p c", 3, 9),
-            new Section("c p", 3, 9),
-            new Section("p c", 3, 9),
-            new Section("c p", 2, 9),
-            new Section("p c", 2, 9),
+            new Section("c  ", 1, 9),
+            new Section("p  ", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("  p", 1, 9),
             new Section("c p", 1, 9),
             new Section("p c", 1, 9),
+            new Section("c p", 1, 9),
+            new Section("  c", 1, 9),
             new Section("c p", 1, 9),
             new Section("p c", 1, 9),
             new Section("c p", 1, 9),
@@ -95,6 +98,47 @@ public class SpawnManager : MonoBehaviour
             new Section("c p", 1, 9),
         };
         levels.Add(new Level(level1Sections));
+
+        Section[] level2Sections =
+        {
+            new Section("cwp", 1, 10),
+            new Section("pwc", 1, 10),
+            new Section("c p", 1, 10),
+            new Section("p c", 1, 10),
+            new Section("w w", 1, 10),
+            new Section("cwp", 1, 10),
+            new Section("w w", 1, 10),
+            new Section(" w ", 1, 10),
+            new Section("w w", 1, 10),
+            new Section(" w ", 1, 10),
+            new Section(" cp", 1, 10),
+            new Section("pw ", 1, 10),
+            new Section("p w", 1, 10),
+            new Section("c p", 1, 10),
+            new Section("pwc", 1, 10),
+            new Section("cwp", 1, 10),
+        };
+        levels.Add(new Level(level2Sections));
+
+        Section[] level3Sections = {
+            new Section("wow", 1, 9),
+            new Section(" o ", 1, 9),
+            new Section("o o", 1, 9),
+            new Section(" o ", 1, 9),
+            new Section("cwp", 1, 9),
+            new Section("cop", 1, 9),
+            new Section("cow", 1, 9),
+            new Section("woc", 1, 9),
+            new Section("ooo", 1, 9),
+            new Section("cwp", 1, 9),
+            new Section("pwc", 1, 9),
+            new Section("p w", 1, 9),
+            new Section("c p", 1, 9),
+            new Section(" o ", 1, 9),
+            new Section("woc", 1, 9),
+            new Section("pow", 1, 9),
+        };
+        levels.Add(new Level(level3Sections));
     }
 
     private void Update()
@@ -140,6 +184,9 @@ public class SpawnManager : MonoBehaviour
                 case 'w':
                     SpawnPrefab(whiteObstaclePrefab, positions[i], speed);
                     break;
+                case 'o':
+                    SpawnPrefab(orangeObstaclePrefab, positions[i], speed);
+                    break;
                 default:
                     break;
             }
@@ -155,7 +202,7 @@ public class SpawnManager : MonoBehaviour
 
     void IncrementSection()
     {
-        if (currentSectionIndex == levels[currentLevelIndex].sections.Length)
+        if (currentSectionIndex == levels[currentLevelIndex].sections.Length - 1)
         {
             currentSectionIndex = 0;
             currentLevelIndex++;

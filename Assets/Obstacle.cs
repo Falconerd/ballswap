@@ -10,10 +10,6 @@ public class Obstacle : MonoBehaviour
     private ObstacleColor color = ObstacleColor.Cyan;
 
     [SerializeField]
-    private GameObject pinkParticlesPrefab;
-    [SerializeField]
-    private GameObject cyanParticlesPrefab;
-
     private GameObject particlesPrefab;
 
     SpriteRenderer spriteRenderer;
@@ -54,6 +50,11 @@ public class Obstacle : MonoBehaviour
                 GameManager.instance.PlayerScored();
                 Destroy(gameObject);
             }
+            else if (color == ObstacleColor.Orange && collision.gameObject.transform.position.x == 0)
+            {
+                GameManager.instance.PlayerScored();
+                Destroy(gameObject);
+            }
             else
             {
                 GameManager.instance.PlayerDied();
@@ -68,16 +69,6 @@ public class Obstacle : MonoBehaviour
         if (spriteRenderer == null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-        if (color == ObstacleColor.Cyan)
-        {
-            // spriteRenderer.color = GameManager.instance.cyanColor;
-            particlesPrefab = cyanParticlesPrefab;
-        }
-        else
-        {
-            // spriteRenderer.color = GameManager.instance.pinkColor;
-            particlesPrefab = pinkParticlesPrefab;
         }
     }
 }
