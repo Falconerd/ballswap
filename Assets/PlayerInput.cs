@@ -15,13 +15,21 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            //playerMovement.Swap();
-            playerMovement.LerpToMiddle();
+            playerMovement.Rotate();
         }
-
-        if (Input.GetButtonUp("Fire1"))
+        else if (Input.GetButtonDown("Fire2"))
         {
-            playerMovement.LerpToTarget();
+            playerMovement.Rotate(false);
         }
+        //if (Input.GetButtonDown("Fire1"))
+        //{
+        //    //playerMovement.Swap();
+        //    playerMovement.LerpToMiddle();
+        //}
+
+        //if (Input.GetButtonUp("Fire1"))
+        //{
+        //    playerMovement.LerpToTarget();
+        //}
     }
 }

@@ -75,4 +75,34 @@ public class PlayerMovement : MonoBehaviour
             orange.SetActive(true);
         }
     }
+
+    bool CyanOnLeft = false;
+    Animator anim;
+
+    internal void Rotate(bool clockwise = true)
+    {
+        anim = GetComponent<Animator>();
+        if (CyanOnLeft)
+        {
+            if (clockwise)
+            {
+                anim.SetTrigger("RotateCyanOnLeftClockwise");
+            } else
+            {
+                anim.SetTrigger("RotateCyanOnLeftCounterClockwise");
+            }
+            CyanOnLeft = !CyanOnLeft;
+        }
+        else
+        {
+            if (clockwise)
+            {
+                anim.SetTrigger("RotateCyanOnRightClockwise");
+            } else
+            {
+                anim.SetTrigger("RotateCyanOnRightCounterClockwise");
+            }
+            CyanOnLeft = !CyanOnLeft;
+        }
+    }
 }

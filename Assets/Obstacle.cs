@@ -42,6 +42,7 @@ public class Obstacle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Summat hit me");
+        return;
         if (collision.gameObject.tag == "Player")
         {
             if ((color == ObstacleColor.Cyan && collision.gameObject.name == "Cyan") ||
